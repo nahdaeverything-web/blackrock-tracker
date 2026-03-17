@@ -1,6 +1,13 @@
 const axios = require("axios");
 
 const FRED_API_KEY = "eccd04335593c447c386fddb78096485";
+const NEWS_API_KEY = "7ea8e60cce3a46c69ab552a7543f113c";
+
+const NEWS_QUERIES = [
+  { category: "Energy", query: "oil price Brent WTI Hormuz OPEC", emoji: "🛢️" },
+  { category: "Macro", query: "Federal Reserve interest rates inflation", emoji: "🏦" },
+  { category: "Crypto", query: "Bitcoin crypto market", emoji: "🪙" },
+];
 
 const FRED_SERIES = [
   { id: "FEDFUNDS", label: "Fed Funds Rate", emoji: "🏦", unit: "%" },
@@ -66,6 +73,41 @@ function pctChange(current, prev) {
   return ` (${sign}${pct.toFixed(2)}%)`;
 }
 
+async function fetchNews() {
+  const results = {};
+  for (const q of NEWS_QUERIES) {
+    try {
+      const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(q.query)}&sortBy=publishedAt&pageSize=5&apiKey=${NEWS_API_KEY}`;
+      const res = await axios.get(url, { timeout: 10000 });
+      results[q.category] = (res.data.articles || []).map((a) => ({
+        title: a.title,
+        source: a.source?.name || "Unknown",
+        publishedAt: a.publishedAt,
+        url: a.url,
+      }));
+    } catch (e) {
+      console.error(`  NewsAPI error (${q.category}): ${e.message}`);
+      results[q.category] = [];
+    }
+  }
+  return results;
+}
+
+async function fetchFearGreed() {
+  try {
+    const res = await axios.get("https://api.alternative.me/fng/?limit=1", { timeout: 10000 });
+    const data = res.data.data[0];
+    return {
+      value: parseInt(data.value),
+      classification: data.value_classification,
+      timestamp: new Date(parseInt(data.timestamp) * 1000).toISOString(),
+    };
+  } catch (e) {
+    console.error(`  Fear & Greed error: ${e.message}`);
+    return null;
+  }
+}
+
 function generateMacroSignal(fredData) {
   const signals = [];
   const fedRate = fredData.find((d) => d.id === "FEDFUNDS");
@@ -117,7 +159,7 @@ async function run() {
   console.log("Fetching data...\n");
 
   // Fetch all in parallel
-  const [fredResults, yahooResults] = await Promise.all([
+  const [fredResults, yahooResults, newsResults, fearGreedResult] = await Promise.all([
     Promise.all(
       FRED_SERIES.map(async (s) => ({
         ...s,
@@ -130,6 +172,8 @@ async function run() {
         data: await fetchYahooPrice(s.symbol),
       }))
     ),
+    fetchNews(),
+    fetchFearGreed(),
   ]);
 
   // Build briefing
@@ -166,10 +210,35 @@ async function run() {
   }
   lines.push("");
 
+  // Fear & Greed
+  lines.push("— MARKET SENTIMENT —");
+  if (fearGreedResult) {
+    lines.push(`😨 Fear & Greed Index: ${fearGreedResult.value}/100 — ${fearGreedResult.classification}`);
+  } else {
+    lines.push("😨 Fear & Greed Index: unavailable");
+  }
+  lines.push("");
+
   // Signal
   lines.push("— MACRO SIGNAL —");
   lines.push(`🧠 ${generateMacroSignal(fredResults)}`);
   lines.push("");
+
+  // News
+  lines.push("— NEWS FEED —");
+  for (const q of NEWS_QUERIES) {
+    lines.push(`${q.emoji} ${q.category.toUpperCase()}:`);
+    const articles = newsResults[q.category] || [];
+    if (articles.length === 0) {
+      lines.push("  No articles available");
+    } else {
+      for (const a of articles) {
+        lines.push(`  • ${a.title} (${a.source})`);
+      }
+    }
+    lines.push("");
+  }
+
   lines.push(`⏰ Updated: ${now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" })}`);
 
   const briefing = lines.join("\n");
