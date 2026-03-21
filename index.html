@@ -609,47 +609,91 @@
 
 <script>
 // ── Market Data ──
-const markets = [
-  { name: 'Brent Crude', price: 89.74, change: 3.42, symbol: 'BRENT' },
-  { name: 'WTI', price: 85.58, change: 2.87, symbol: 'WTI' },
-  { name: 'Gold', price: 2985.30, change: 0.94, symbol: 'XAU' },
-  { name: 'Bitcoin', price: 83410.00, change: -1.23, symbol: 'BTC' },
-  { name: 'Ethereum', price: 1907.50, change: -2.15, symbol: 'ETH' },
-  { name: 'S&P 500', price: 5638.94, change: -0.67, symbol: 'SPX' },
+// Live market prices via Yahoo Finance
+const marketSymbols = [
+  { symbol: 'BZ=F', name: 'Brent Crude', label: 'BRENT' },
+  { symbol: 'CL=F', name: 'WTI', label: 'WTI' },
+  { symbol: 'GC=F', name: 'Gold', label: 'XAU' },
+  { symbol: 'BTC-USD', name: 'Bitcoin', label: 'BTC' },
+  { symbol: 'ETH-USD', name: 'Ethereum', label: 'ETH' },
+  { symbol: '^GSPC', name: 'S&P 500', label: 'SPX' },
 ];
 
-const marketGrid = document.getElementById('marketGrid');
-markets.forEach(m => {
-  const dir = m.change >= 0 ? 'up' : 'down';
-  const arrow = m.change >= 0 ? '&#9650;' : '&#9660;';
-  const fmt = m.price >= 10000
-    ? m.price.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
-    : m.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+async function fetchYahooLive(sym) {
+  try {
+    const url = `https://corsproxy.io/?${encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + sym + '?interval=1d&range=5d')}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const closes = data.chart.result[0].indicators.quote[0].close.filter(v => v != null);
+    const current = closes[closes.length - 1];
+    const prev = closes.length >= 2 ? closes[closes.length - 2] : current;
+    return { price: current, change: prev ? (current - prev) / prev * 100 : 0 };
+  } catch(e) { return null; }
+}
 
-  marketGrid.innerHTML += `
-    <div class="market-card">
-      <div class="label">${m.symbol} &mdash; ${m.name}</div>
-      <div class="price">$${fmt}</div>
-      <div class="change ${dir}">${arrow} ${Math.abs(m.change).toFixed(2)}%</div>
-    </div>`;
-});
+async function renderMarkets() {
+  const marketGrid = document.getElementById('marketGrid');
+  marketGrid.innerHTML = marketSymbols.map(m => `
+    <div class="market-card" id="mc-${m.label}">
+      <div class="label">${m.label} — ${m.name}</div>
+      <div class="price" style="color:#aaa">Loading...</div>
+    </div>`).join('');
+  for (const m of marketSymbols) {
+    const d = await fetchYahooLive(m.symbol);
+    const el = document.getElementById('mc-' + m.label);
+    if (d && el) {
+      const dir = d.change >= 0 ? 'up' : 'down';
+      const arrow = d.change >= 0 ? '&#9650;' : '&#9660;';
+      const fmt = d.price >= 10000
+        ? d.price.toLocaleString('en-US', {minimumFractionDigits:0,maximumFractionDigits:0})
+        : d.price.toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2});
+      el.innerHTML = `
+        <div class="label">${m.label} — ${m.name}</div>
+        <div class="price">$${fmt}</div>
+        <div class="change ${dir}">${arrow} ${Math.abs(d.change).toFixed(2)}%</div>`;
+    }
+  }
+}
+renderMarkets();
 
 // ── Macro Signals ──
-const macros = [
-  { label: 'Fed Funds Rate', value: '3.64%' },
-  { label: 'CPI Index', value: '327.46' },
-  { label: '10Y Treasury', value: '4.27%' },
-  { label: 'USD Index (DXY)', value: '119.49' },
+// Live macro data from FRED
+const FRED_KEY = 'eccd04335593c447c386fddb78096485';
+const fredSeries = [
+  { id: 'FEDFUNDS', label: 'Fed Funds Rate', unit: '%' },
+  { id: 'CPIAUCSL', label: 'CPI Index', unit: '' },
+  { id: 'DGS10', label: '10Y Treasury', unit: '%' },
+  { id: 'DTWEXBGS', label: 'USD Index (DXY)', unit: '' },
 ];
 
-const macroGrid = document.getElementById('macroGrid');
-macros.forEach(m => {
-  macroGrid.innerHTML += `
-    <div class="macro-card">
-      <div class="macro-value">${m.value}</div>
+async function fetchFred(seriesId) {
+  try {
+    const url = `https://corsproxy.io/?${encodeURIComponent('https://api.stlouisfed.org/fred/series/observations?series_id=' + seriesId + '&api_key=' + FRED_KEY + '&file_type=json&sort_order=desc&limit=2')}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const obs = data.observations.filter(o => o.value !== '.');
+    return obs.length > 0 ? parseFloat(obs[0].value).toFixed(2) : null;
+  } catch(e) { return null; }
+}
+
+async function renderMacros() {
+  const macroGrid = document.getElementById('macroGrid');
+  macroGrid.innerHTML = fredSeries.map(m => `
+    <div class="macro-card" id="fred-${m.id}">
+      <div class="macro-value" style="color:#aaa">...</div>
       <div class="macro-label">${m.label}</div>
-    </div>`;
-});
+    </div>`).join('');
+  for (const m of fredSeries) {
+    const val = await fetchFred(m.id);
+    const el = document.getElementById('fred-' + m.id);
+    if (val && el) {
+      el.innerHTML = `
+        <div class="macro-value">${val}${m.unit}</div>
+        <div class="macro-label">${m.label}</div>`;
+    }
+  }
+}
+renderMacros();
 
 // ── Trade Ideas ──
 const trades = [
