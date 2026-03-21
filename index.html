@@ -624,10 +624,8 @@ async function fetchYahooLive(sym) {
     const url = `/.netlify/functions/prices?sym=${encodeURIComponent(sym)}`;
     const res = await fetch(url);
     const data = await res.json();
-    const closes = data.chart.result[0].indicators.quote[0].close.filter(v => v != null);
-    const current = closes[closes.length - 1];
-    const prev = closes.length >= 2 ? closes[closes.length - 2] : current;
-    return { price: current, change: prev ? (current - prev) / prev * 100 : 0 };
+    if (data.error || !data.price) return null;
+    return { price: data.price, change: data.change };
   } catch(e) { return null; }
 }
 
@@ -671,8 +669,8 @@ async function fetchFred(seriesId) {
     const url = `/.netlify/functions/fred?id=${seriesId}`;
     const res = await fetch(url);
     const data = await res.json();
-    const obs = data.observations.filter(o => o.value !== '.');
-    return obs.length > 0 ? parseFloat(obs[0].value).toFixed(2) : null;
+    if (data.error || !data.value) return null;
+    return data.value;
   } catch(e) { return null; }
 }
 
