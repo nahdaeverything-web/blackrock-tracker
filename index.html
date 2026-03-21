@@ -719,19 +719,29 @@ renderMacros();
 // ── Trade Ideas ──
 const trades = [
   {
-    asset: 'Brent', direction: 'LONG', entry: '$87 – $92', target: '$107 / $119', stop: '$82',
-    thesis: 'Hormuz closure geopolitical premium, floor holds until ceasefire',
-    status: 'ACTIVE', date: 'Mar 16'
+    asset: 'Brent', direction: 'LONG', entry: '$87 – $92', target: '$120 / $130', stop: '$95',
+    thesis: 'Iran-Israel war premium fully active. Goldman forecasting $100+ for years. Hormuz chokepoint under extreme pressure. No ceasefire in sight — US & Israel still seeking to manage escalation, not end it.',
+    status: 'ACTIVE', date: 'Mar 21'
   },
   {
-    asset: 'WTI', direction: 'LONG', entry: '$82 – $87', target: '$100 / $110', stop: '$78',
-    thesis: 'Follows Brent, supply disruption sustained',
-    status: 'ACTIVE', date: 'Mar 16'
+    asset: 'WTI', direction: 'LONG', entry: '$82 – $87', target: '$110 / $120', stop: '$90',
+    thesis: 'Tracking Brent closely. Supply disruption sustained. Brent/WTI spread widening as Gulf risk premium climbs.',
+    status: 'ACTIVE', date: 'Mar 21'
   },
   {
-    asset: 'Brent', direction: 'SHORT', entry: '$107 – $112', target: '$87 – $90', stop: '$119',
-    thesis: 'Only on diplomatic / ceasefire signal',
-    status: 'WATCHING', date: 'Mar 16'
+    asset: 'Gold', direction: 'LONG', entry: '$3,000', target: '$5,000+', stop: '$4,200',
+    thesis: 'Safe haven demand surging. War in Middle East + Fed reassessment + K-shaped economy fear driving capital into gold. XAU at $4,574 — historic levels. No near-term reversal catalyst.',
+    status: 'ACTIVE', date: 'Mar 21'
+  },
+  {
+    asset: 'S&P 500', direction: 'WATCH', entry: '—', target: '—', stop: '—',
+    thesis: 'Third straight session of losses. War + oil shock forcing central bank reassessment — rate hike risk back on table. Avoid longs until clarity on Fed response.',
+    status: 'WATCHING', date: 'Mar 21'
+  },
+  {
+    asset: 'BTC', direction: 'NEUTRAL', entry: '—', target: '—', stop: '—',
+    thesis: 'Under pressure from macro headwinds. If oil hits $180, inflation doubles and rate-cut hopes die — significant BTC downside risk. Hold, no new entries.',
+    status: 'WATCHING', date: 'Mar 21'
   },
 ];
 
@@ -756,13 +766,22 @@ trades.forEach(t => {
 
 // ── Events Watchlist ──
 const events = [
-  { text: 'Ceasefire / diplomatic breakthrough signal — immediate Brent repricing trigger', priority: 'critical' },
-  { text: 'OPEC+ Meeting — April 5 — emergency coordination on supply response', priority: 'critical' },
-  { text: 'IEA Weekly Inventory Data — storage levels nearing critical in Gulf states', priority: 'high' },
-  { text: 'Trump-Putin diplomatic channel — any mediation signals cap oil upside', priority: 'high' },
-  { text: 'Iranian escalation / retaliation — missile strikes on Gulf infrastructure', priority: 'critical' },
-  { text: 'Iraqi onshore storage crisis — field shut-ins accelerating', priority: 'high' },
-  { text: 'US CPI Print — next release key for Fed path & USD trajectory', priority: 'medium' },
+  {
+    date: 'Mar 21', type: 'CRITICAL', title: 'Iran War — No Off-Ramp',
+    body: 'US & Israel attempting to manage escalation optics but Standard Chartered sees "no clear off-ramps." Gulf energy infrastructure remains primary risk. IDF struck South Pars (world's largest gas reserve) Mar 18. Iran threatening retaliatory strikes on Saudi/UAE/Qatar facilities. $130+ Brent trigger still live.'
+  },
+  {
+    date: 'Mar 21', type: 'MACRO', title: 'Central Bank Reassessment Underway',
+    body: 'Global stocks fell 3rd straight session. Bond yields jumping as markets price in war-driven inflation. Fed rate hike risk returning to the table. Bank of America: "Three conditions" for hikes could be met. Mortgage rates surging — spring housing market under pressure.'
+  },
+  {
+    date: 'Mar 21', type: 'OIL', title: 'Brent Holding Above $100 — Goldman: Could Last a Decade',
+    body: 'Goldman Sachs oil forecast: Brent above $100 sustained for years if Hormuz pressure persists. Trump attempting to control prices but Russia back in play. Brent at $106.41 today, off highs as US-Israel seek to "ease concerns." Pullback is a buying opportunity, not reversal.'
+  },
+  {
+    date: 'Mar 21', type: 'RISK', title: 'Oil at $180 Scenario',
+    body: 'Cointelegraph/analysts: 70% oil spike could nearly double US inflation, eliminate rate-cut hopes, crash BTC and equities. Scenario probability elevated if Iran strikes Saudi/UAE/Qatar. Monitor Gulf facility news closely.'
+  },
 ];
 
 const eventsList = document.getElementById('eventsList');
