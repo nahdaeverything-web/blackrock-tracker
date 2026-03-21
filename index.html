@@ -470,27 +470,26 @@
 </style>
 
 <script>
-// Auto-refresh once daily
-(function() {
-  const REFRESH_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
+// Auto-refresh once daily — runs AFTER page fully loads to avoid interrupting data fetch
+window.addEventListener('load', function() {
+  const REFRESH_INTERVAL = 24 * 60 * 60 * 1000;
   const lastRefresh = localStorage.getItem('blackrock_last_refresh');
   const now = Date.now();
+  const el = document.getElementById('lastUpdated');
+
   if (!lastRefresh || now - parseInt(lastRefresh) > REFRESH_INTERVAL) {
     localStorage.setItem('blackrock_last_refresh', now.toString());
-    if (lastRefresh) window.location.reload(true); // force reload after first visit
-  }
-  // Show last refresh time in footer
-  window.addEventListener('DOMContentLoaded', () => {
-    const ts = localStorage.getItem('blackrock_last_refresh');
-    if (ts) {
-      const el = document.getElementById('lastUpdated');
-      if (el) {
-        const d = new Date(parseInt(ts));
-        el.textContent = 'Last refreshed: ' + d.toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
-      }
+    if (lastRefresh) {
+      // Delay reload by 3s so current data fetch completes first
+      setTimeout(() => window.location.reload(true), 3000);
     }
-  });
-})();
+  }
+
+  if (lastRefresh && el) {
+    const d = new Date(parseInt(lastRefresh));
+    el.textContent = 'Last refreshed: ' + d.toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  }
+});
 </script>
 </head>
 <body>
@@ -554,44 +553,45 @@
 
   <!-- OIL ANALYSIS -->
   <section>
-    <div class="section-label">Oil Analysis — March 16, 2026</div>
+    <div class="section-label">Oil Analysis — March 21, 2026</div>
     <div class="analysis-box">
-      <h3>&#x1F6E2;&#xFE0F; OIL MARKET DEEP DIVE — March 16, 2026</h3>
+      <h3>&#x1F6E2;&#xFE0F; OIL MARKET DEEP DIVE — March 21, 2026</h3>
 
       <h3>THE BIG PICTURE</h3>
-      <p>US-Israel launched <span class="danger">Operation Epic Fury</span> against Iran on Feb 28. The Strait of Hormuz — carrying <span class="highlight">20% of global oil supply</span> — is effectively closed. The IEA called it the <span class="warn">largest supply disruption in history</span>. Gulf producers are shutting in fields because storage is full and tankers can't move through the strait.</p>
+      <p>Three weeks into the US-Israel operation against Iran, the conflict is entering a <span class="danger">dangerous new phase</span>. IDF struck Iran's South Pars gas facility (world's largest gas reserve) on Mar 18. Iran is threatening retaliatory strikes on Saudi, UAE, and Qatari energy infrastructure. Goldman Sachs now forecasts Brent above <span class="highlight">$100 for years</span> if Hormuz pressure persists. Standard Chartered: <span class="warn">"No clear off-ramps in the conflict."</span></p>
 
       <h3>SUPPLY DISRUPTION SCALE</h3>
       <ul>
-        <li><span class="highlight">~17-20 million bbl/day</span> of transit capacity offline through Hormuz</li>
-        <li>Saudi Arabia, UAE, Kuwait, Iraq, and Qatar all impacted</li>
-        <li>Iraq facing acute onshore storage crisis — fields approaching shut-in</li>
-        <li>Alternative routes (Yanbu pipeline, Fujairah bypass) only cover <span class="warn">~5-6 million bbl/day</span> max</li>
-        <li>Net disruption estimate: <span class="danger">11-14 million bbl/day</span> — unprecedented in modern oil markets</li>
+        <li><span class="highlight">~17-20 million bbl/day</span> of Hormuz transit capacity at risk</li>
+        <li>South Pars strike threatens Iran's gas exports — world's largest reserve now a target</li>
+        <li>Alternative routes (Yanbu, Fujairah) cover only <span class="warn">~5-6 million bbl/day</span></li>
+        <li>Gulf producers on high alert for retaliatory Iranian strikes on their facilities</li>
+        <li>Net disruption risk: <span class="danger">11-14 million bbl/day</span> if retaliation materializes</li>
       </ul>
 
-      <h3>PRICE ACTION</h3>
+      <h3>PRICE ACTION (Mar 21)</h3>
       <ul>
-        <li>Brent: <span class="highlight">$89.74</span> — still remarkably contained given the disruption scale</li>
-        <li>WTI: <span class="highlight">$85.58</span> — US-centric pricing partially insulated</li>
-        <li>Markets pricing in diplomatic resolution within weeks — if that fails, expect a violent repricing to <span class="danger">$107-119 Brent</span></li>
-        <li>The $87-92 range is the "ceasefire hope" floor — below that only on confirmed de-escalation</li>
+        <li>Brent: <span class="highlight">$106.41</span> — off recent highs as US-Israel attempt to ease concerns</li>
+        <li>WTI: <span class="highlight">$98.23</span> — holding near $100 psychological level</li>
+        <li>Pullback is <span class="warn">diplomatic optics, not de-escalation</span> — no ceasefire signal</li>
+        <li>Goldman: $100+ floor could hold for a decade under sustained Hormuz pressure</li>
+        <li>Dips to $100-104 Brent are buying opportunities, not reversals</li>
       </ul>
 
       <h3>GEOPOLITICAL VARIABLES</h3>
       <ul>
-        <li><span class="danger">Iran retaliation risk</span> — missile strikes on Gulf oil infrastructure would send Brent parabolic</li>
-        <li><span class="warn">Trump-Putin diplomatic channel</span> — any signals of mediation could cap upside</li>
-        <li>OPEC response: emergency meeting possible if disruption extends past April 5 scheduled meeting</li>
-        <li>SPR release — US has ~350M barrels, could deploy 1-2M bbl/day for months</li>
-        <li>China's strategic reserve drawdown — potential wildcard on demand side</li>
+        <li><span class="danger">🔴 CRITICAL: Iran retaliation threat</span> — strikes on Saudi/UAE/Qatar = $130+ immediate trigger</li>
+        <li><span class="warn">Trump managing narrative</span> — trying to control price optics but no structural de-escalation</li>
+        <li>Russia re-entering the picture as diplomatic/supply wildcard</li>
+        <li>TACO trade being priced in by some — analysts warn of "rude awakening"</li>
+        <li>SPR deployment possible but insufficient against 11-14M bbl/day disruption</li>
       </ul>
 
-      <h3>BASE CASE SCENARIO</h3>
-      <p>Hormuz remains disrupted for 2-4 more weeks. Brent trades <span class="highlight">$87-107 range</span>. Ceasefire negotiations accelerate under economic pressure. OPEC+ holds emergency coordination. If ceasefire achieved by mid-April, Brent retraces to $80-85. If conflict escalates or Iranian retaliation materializes, <span class="danger">$119-130 is in play</span>.</p>
+      <h3>BASE CASE SCENARIO (Updated Mar 21)</h3>
+      <p>Brent consolidates <span class="highlight">$100-112</span> range near-term as diplomatic noise caps upside. No ceasefire — conflict remains active. If Iran strikes Gulf energy infrastructure, <span class="danger">$130+ in play immediately</span>. If genuine de-escalation signals emerge, retracement to $90-95 possible. Goldman's decade-long $100+ forecast sets the structural floor.</p>
 
       <h3>THESIS</h3>
-      <p>The market is underpricing the duration risk. Every day Hormuz stays closed, the storage math gets worse. Long Brent on dips to $87-92 with stops at $82. Take profit in tranches at $100, $107, $119. Flip short only on confirmed diplomatic breakthrough.</p>
+      <p>Stay long Brent. The war premium is structural, not speculative — Goldman agrees. Dips to $100-104 are entries, not exits. Stop at $95 (confirmed ceasefire only). Target $120-130 on Gulf facility strike or Hormuz full closure. The single biggest risk to the long is a surprise Trump-Iran back-channel deal — monitor for any diplomatic signals.</p>
     </div>
   </section>
 
