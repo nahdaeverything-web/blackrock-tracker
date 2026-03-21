@@ -468,6 +468,30 @@
     .macro-grid { grid-template-columns: 1fr; }
   }
 </style>
+
+<script>
+// Auto-refresh once daily
+(function() {
+  const REFRESH_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
+  const lastRefresh = localStorage.getItem('blackrock_last_refresh');
+  const now = Date.now();
+  if (!lastRefresh || now - parseInt(lastRefresh) > REFRESH_INTERVAL) {
+    localStorage.setItem('blackrock_last_refresh', now.toString());
+    if (lastRefresh) window.location.reload(true); // force reload after first visit
+  }
+  // Show last refresh time in footer
+  window.addEventListener('DOMContentLoaded', () => {
+    const ts = localStorage.getItem('blackrock_last_refresh');
+    if (ts) {
+      const el = document.getElementById('lastUpdated');
+      if (el) {
+        const d = new Date(parseInt(ts));
+        el.textContent = 'Last refreshed: ' + d.toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
+      }
+    }
+  });
+})();
+</script>
 </head>
 <body>
 
