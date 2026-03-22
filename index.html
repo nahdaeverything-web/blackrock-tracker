@@ -644,13 +644,34 @@ const marketSymbols = [
 ];
 
 async function fetchYahooLive(sym) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
   try {
     const url = `/.netlify/functions/prices?sym=${encodeURIComponent(sym)}`;
-    const res = await fetch(url);
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeout);
     const data = await res.json();
     if (data.error || !data.price) return null;
     return { price: data.price, change: data.change };
-  } catch(e) { return null; }
+  } catch(e) { clearTimeout(timeout); return null; }
+}
+
+function renderMarketCard(m, d) {
+  const el = document.getElementById('mc-' + m.label);
+  if (!el) return;
+  if (!d) {
+    el.innerHTML = `<div class="label">${m.label} — ${m.name}</div><div class="price" style="color:#666">Unavailable</div>`;
+    return;
+  }
+  const dir = d.change >= 0 ? 'up' : 'down';
+  const arrow = d.change >= 0 ? '&#9650;' : '&#9660;';
+  const fmt = d.price >= 10000
+    ? d.price.toLocaleString('en-US', {minimumFractionDigits:0,maximumFractionDigits:0})
+    : d.price.toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2});
+  el.innerHTML = `
+    <div class="label">${m.label} — ${m.name}</div>
+    <div class="price">$${fmt}</div>
+    <div class="change ${dir}">${arrow} ${Math.abs(d.change).toFixed(2)}%</div>`;
 }
 
 async function renderMarkets() {
@@ -660,21 +681,9 @@ async function renderMarkets() {
       <div class="label">${m.label} — ${m.name}</div>
       <div class="price" style="color:#aaa">Loading...</div>
     </div>`).join('');
-  for (const m of marketSymbols) {
-    const d = await fetchYahooLive(m.symbol);
-    const el = document.getElementById('mc-' + m.label);
-    if (d && el) {
-      const dir = d.change >= 0 ? 'up' : 'down';
-      const arrow = d.change >= 0 ? '&#9650;' : '&#9660;';
-      const fmt = d.price >= 10000
-        ? d.price.toLocaleString('en-US', {minimumFractionDigits:0,maximumFractionDigits:0})
-        : d.price.toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2});
-      el.innerHTML = `
-        <div class="label">${m.label} — ${m.name}</div>
-        <div class="price">$${fmt}</div>
-        <div class="change ${dir}">${arrow} ${Math.abs(d.change).toFixed(2)}%</div>`;
-    }
-  }
+  // Fetch all in parallel
+  const results = await Promise.all(marketSymbols.map(m => fetchYahooLive(m.symbol)));
+  marketSymbols.forEach((m, i) => renderMarketCard(m, results[i]));
 }
 renderMarkets();
 
@@ -688,13 +697,16 @@ const fredSeries = [
 ];
 
 async function fetchFred(seriesId) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
   try {
     const url = `/.netlify/functions/fred?id=${seriesId}`;
-    const res = await fetch(url);
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeout);
     const data = await res.json();
     if (data.error || !data.value) return null;
     return data.value;
-  } catch(e) { return null; }
+  } catch(e) { clearTimeout(timeout); return null; }
 }
 
 async function renderMacros() {
