@@ -492,7 +492,50 @@
   <!-- MARKET OVERVIEW -->
   <section>
     <div class="section-label">Market Overview</div>
-    <div class="market-grid" id="marketGrid">{{MARKET_CARDS}}</div>
+    <div class="market-grid" id="marketGrid">
+<style>
+.tv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 768px) { .tv-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .tv-grid { grid-template-columns: 1fr; } }
+</style>
+<div class="tv-grid">
+  <!-- Brent Crude -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"OANDA:BCOUSD","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- WTI -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"USOIL","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- Gold -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"OANDA:XAUUSD","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- Bitcoin -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"BINANCE:BTCUSDT","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- Ethereum -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"BINANCE:ETHUSDT","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- S&P 500 -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"SP:SPX","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+</div></div>
   </section>
 
   <!-- MACRO SIGNALS -->

@@ -482,7 +482,7 @@
     </div>
     <div class="header-meta">
       <span><span class="live-dot"></span>Markets Open</span>
-      <span id="lastUpdated">Last updated: Mar 22, 2026, 07:20 AM GMT+3</span>
+      <span id="lastUpdated">Last updated: Mar 22, 2026, 12:21 PM GMT+3</span>
     </div>
   </div>
 </header>
@@ -492,12 +492,50 @@
   <!-- MARKET OVERVIEW -->
   <section>
     <div class="section-label">Market Overview</div>
-    <div class="market-grid" id="marketGrid"><div class="market-card"><div class="label">BRENT — Brent Crude</div><div class="price">$106.41</div><div class="change down">▼ 5.15%</div></div>
-<div class="market-card"><div class="label">WTI — WTI Oil</div><div class="price">$98.23</div><div class="change down">▼ 0.09%</div></div>
-<div class="market-card"><div class="label">XAU — Gold</div><div class="price">$4,574.90</div><div class="change up">▲ 0.10%</div></div>
-<div class="market-card"><div class="label">BTC — Bitcoin</div><div class="price">$69,485</div><div class="change down">▼ 1.47%</div></div>
-<div class="market-card"><div class="label">ETH — Ethereum</div><div class="price">$2,120.72</div><div class="change down">▼ 1.20%</div></div>
-<div class="market-card"><div class="label">SPX — S&P 500</div><div class="price">$6,506.48</div><div class="change up">▲ 0.00%</div></div></div>
+    <div class="market-grid" id="marketGrid">
+<style>
+.tv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 768px) { .tv-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .tv-grid { grid-template-columns: 1fr; } }
+</style>
+<div class="tv-grid">
+  <!-- Brent Crude -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"OANDA:BCOUSD","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- WTI -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"USOIL","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- Gold -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"OANDA:XAUUSD","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- Bitcoin -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"BINANCE:BTCUSDT","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- Ethereum -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"BINANCE:ETHUSDT","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- S&P 500 -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"SP:SPX","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+</div></div>
   </section>
 
   <!-- MACRO SIGNALS -->
@@ -525,15 +563,15 @@
     <div class="news-grid" id="newsGrid">
       <div class="news-column" id="newsEnergy">
         <div class="news-column-title">🛢️ Energy</div>
-        <div class="news-items"><div class="news-item"><a href="https://www.rigzone.com/news/wire/oil_surges_as_iran_war_escalates-20-mar-2026-183265-article/" target="_blank" rel="noopener">Oil Surges as Iran War Escalates</a><div class="news-meta"><span class="news-source">Rigzone</span><span>1d ago</span></div></div><div class="news-item"><a href="https://economictimes.indiatimes.com/news/international/us/will-brent-crude-oil-price-stay-above-100-for-years-amid-us-iran-war-why-goldman-sachs-oil-price-forecast-says-it-could-last-a-decade-as-chokepoint-faces-extreme-pressure/articleshow/129702598.cms" target="_blank" rel="noopener">Will Brent crude oil price stay above $100 for years amid US-Iran war? Why Goldman Sachs oil price forecast says it could last a decade as chokepoint faces extreme pressure</a><div class="news-meta"><span class="news-source">The Times of India</span><span>1d ago</span></div></div><div class="news-item"><a href="https://financialpost.com/pmn/business-pmn/oil-declines-as-us-israel-seek-to-ease-concerns-over-iran-war" target="_blank" rel="noopener">Oil Declines as US, Israel Seek to Ease Concerns Over Iran War</a><div class="news-meta"><span class="news-source">Financial Post</span><span>1d ago</span></div></div><div class="news-item"><a href="https://economictimes.indiatimes.com/news/international/us/brent-crude-oil-price-hits-record-highs-how-president-trump-is-trying-to-control-exploding-crude-oil-and-gas-prices-in-usa-amid-iran-war-crisis-is-russia-back-in-the-game/articleshow/129681703.cms" target="_blank" rel="noopener">Brent crude oil price hits record highs: How President Trump is trying to control exploding crude oil and gas prices in USA amid Iran war crisis — Is Russia back in the game?</a><div class="news-meta"><span class="news-source">The Times of India</span><span>2d ago</span></div></div><div class="news-item"><a href="https://www.digitaljournal.com/world/war-fuels-fears-of-new-oil-crisis/article" target="_blank" rel="noopener">War fuels fears of new oil crisis</a><div class="news-meta"><span class="news-source">Digital Journal</span><span>4d ago</span></div></div></div>
+        <div class="news-items"><div class="news-item"><a href="https://www.naturalnews.com/2026-03-21-cabinet-secretaries-rule-out-export-restrictions-gas-prices.html" target="_blank" rel="noopener">Cabinet Secretaries Rule Out Export Restrictions to Curb Gas Prices, Citing Energy Security</a><div class="news-meta"><span class="news-source">Naturalnews.com</span><span>1d ago</span></div></div><div class="news-item"><a href="https://www.rigzone.com/news/wire/oil_surges_as_iran_war_escalates-20-mar-2026-183265-article/" target="_blank" rel="noopener">Oil Surges as Iran War Escalates</a><div class="news-meta"><span class="news-source">Rigzone</span><span>1d ago</span></div></div><div class="news-item"><a href="https://economictimes.indiatimes.com/news/international/us/will-brent-crude-oil-price-stay-above-100-for-years-amid-us-iran-war-why-goldman-sachs-oil-price-forecast-says-it-could-last-a-decade-as-chokepoint-faces-extreme-pressure/articleshow/129702598.cms" target="_blank" rel="noopener">Will Brent crude oil price stay above $100 for years amid US-Iran war? Why Goldman Sachs oil price forecast says it could last a decade as chokepoint faces extreme pressure</a><div class="news-meta"><span class="news-source">The Times of India</span><span>1d ago</span></div></div><div class="news-item"><a href="https://financialpost.com/pmn/business-pmn/oil-declines-as-us-israel-seek-to-ease-concerns-over-iran-war" target="_blank" rel="noopener">Oil Declines as US, Israel Seek to Ease Concerns Over Iran War</a><div class="news-meta"><span class="news-source">Financial Post</span><span>2d ago</span></div></div><div class="news-item"><a href="https://economictimes.indiatimes.com/news/international/us/brent-crude-oil-price-hits-record-highs-how-president-trump-is-trying-to-control-exploding-crude-oil-and-gas-prices-in-usa-amid-iran-war-crisis-is-russia-back-in-the-game/articleshow/129681703.cms" target="_blank" rel="noopener">Brent crude oil price hits record highs: How President Trump is trying to control exploding crude oil and gas prices in USA amid Iran war crisis — Is Russia back in the game?</a><div class="news-meta"><span class="news-source">The Times of India</span><span>2d ago</span></div></div></div>
       </div>
       <div class="news-column" id="newsMacro">
         <div class="news-column-title">🏦 Macro</div>
-        <div class="news-items"><div class="news-item"><a href="https://cointelegraph.com/news/gold-sees-biggest-weekly-fall-in-43-years" target="_blank" rel="noopener">Gold sees biggest weekly fall in 43 years as Iran war rages on</a><div class="news-meta"><span class="news-source">Cointelegraph</span><span>1d ago</span></div></div><div class="news-item"><a href="https://www.huffpost.com/entry/financial-markets-oil-stocks_n_69bdd013e4b048411914ebfc" target="_blank" rel="noopener">High Oil Prices Knock Down Stocks And Erase Wall Street's Hopes For A Cut To Interest Rates</a><div class="news-meta"><span class="news-source">HuffPost</span><span>1d ago</span></div></div><div class="news-item"><a href="https://www.cbc.ca/news/canada/canadian-stock-market-close-friday-march-20-2026-9.7136842" target="_blank" rel="noopener">Stock markets dip for another straight week as U.S. war on Iran continues</a><div class="news-meta"><span class="news-source">CBC News</span><span>1d ago</span></div></div><div class="news-item"><a href="https://www.newser.com/story/385839/oil-prices-depress-stocks-end-notion-of-interest-rate-cuts.html" target="_blank" rel="noopener">Oil Prices Depress Stocks, End Notion of Interest Rate Cuts</a><div class="news-meta"><span class="news-source">Newser</span><span>1d ago</span></div></div><div class="news-item"><a href="https://nypost.com/2026/03/20/business/armageddon-attack-on-qatari-plant-could-keep-energy-prices-high-around-the-world-analysts/" target="_blank" rel="noopener">‘Armageddon’ attack on Qatari plant could keep energy prices high around the world: analysts</a><div class="news-meta"><span class="news-source">New York Post</span><span>1d ago</span></div></div></div>
+        <div class="news-items"><div class="news-item"><a href="https://economictimes.indiatimes.com/markets/commodities/news/explained-why-gold-prices-remain-subdued-despite-west-asia-tensions/articleshow/129714910.cms" target="_blank" rel="noopener">Explained: Why gold prices remain subdued despite West Asia tensions</a><div class="news-meta"><span class="news-source">The Times of India</span><span>1d ago</span></div></div><div class="news-item"><a href="https://economictimes.indiatimes.com/markets/stocks/news/metals-to-shine-hindustan-copper-tata-steel-other-stocks-plunge-up-to-14-in-one-month-what-lies-ahead/articleshow/129714250.cms" target="_blank" rel="noopener">Metals to shine? Hindustan Copper, Tata Steel, other stocks plunge up to 14% in one month; what lies ahead?</a><div class="news-meta"><span class="news-source">The Times of India</span><span>1d ago</span></div></div><div class="news-item"><a href="https://www.naturalnews.com/2026-03-21-gold-cost-falls-to-one-month-low.html" target="_blank" rel="noopener">Gold Price Falls to One-Month Low Amid Shifting Federal Reserve Expectations</a><div class="news-meta"><span class="news-source">Naturalnews.com</span><span>1d ago</span></div></div><div class="news-item"><a href="https://cointelegraph.com/news/gold-sees-biggest-weekly-fall-in-43-years" target="_blank" rel="noopener">Gold sees biggest weekly fall in 43 years as Iran war rages on</a><div class="news-meta"><span class="news-source">Cointelegraph</span><span>1d ago</span></div></div><div class="news-item"><a href="https://www.huffpost.com/entry/financial-markets-oil-stocks_n_69bdd013e4b048411914ebfc" target="_blank" rel="noopener">High Oil Prices Knock Down Stocks And Erase Wall Street's Hopes For A Cut To Interest Rates</a><div class="news-meta"><span class="news-source">HuffPost</span><span>1d ago</span></div></div></div>
       </div>
       <div class="news-column" id="newsCrypto">
         <div class="news-column-title">🪙 Crypto</div>
-        <div class="news-items"><div class="news-item"><a href="https://bitcoinist.com/dont-celebrate-bitcoin-yet/" target="_blank" rel="noopener">Don’t Celebrate Bitcoin Yet: The Trend Is Still Bearish, And This Is Why</a><div class="news-meta"><span class="news-source">Bitcoinist</span><span>1d ago</span></div></div><div class="news-item"><a href="http://www.newsbtc.com/news/zcash-zec/grayscale-18x-upside-zcash-if-this-happens/" target="_blank" rel="noopener">Grayscale Predicts 18x Upside For Zcash If This Happens</a><div class="news-meta"><span class="news-source">newsBTC</span><span>1d ago</span></div></div><div class="news-item"><a href="https://bitcoinist.com/altcoin-volumes-reflect-deepening-market-fatigue/" target="_blank" rel="noopener">From FOMO to Apathy: Altcoin Volumes Reflect Deepening Market Fatigue</a><div class="news-meta"><span class="news-source">Bitcoinist</span><span>1d ago</span></div></div><div class="news-item"><a href="https://bitcoinist.com/why-bitcoin-fell-below-70000/" target="_blank" rel="noopener">Here’s Why The Bitcoin Price Fell Below The $70,000 Level Again</a><div class="news-meta"><span class="news-source">Bitcoinist</span><span>1d ago</span></div></div><div class="news-item"><a href="https://www.globenewswire.com/news-release/2026/03/21/3259995/0/en/Crypto-News-Pepeto-Announces-Security-Update-While-Bitcoin-Price-Prediction-Targets-200K-and-Trump-News-Point-to-Bull-Cycle.html" target="_blank" rel="noopener">Crypto News: Pepeto Announces Security Update While Bitcoin Price Prediction Targets $200K and Trump News Point to Bull Cycle</a><div class="news-meta"><span class="news-source">GlobeNewswire</span><span>1d ago</span></div></div></div>
+        <div class="news-items"><div class="news-item"><a href="http://www.newsbtc.com/news/bitcoin/bitcoin-price-could-visit-43k-before-bull-market/" target="_blank" rel="noopener">Bitcoin Price Could Visit $43K Before Next Bull Market — Here’s How</a><div class="news-meta"><span class="news-source">newsBTC</span><span>1d ago</span></div></div><div class="news-item"><a href="https://dailyhodl.com/2026/03/21/benjamin-cowen-says-bitcoin-locked-in-bearish-structure-unless-this-line-in-the-sand-is-crossed-heres-his-outlook/" target="_blank" rel="noopener">Benjamin Cowen Says Bitcoin Locked in Bearish Structure Unless This ‘Line in the Sand’ Is Crossed – Here’s His Outlook</a><div class="news-meta"><span class="news-source">The Daily Hodl</span><span>1d ago</span></div></div><div class="news-item"><a href="http://www.newsbtc.com/altcoin/grayscale-files-for-hype-etf-heres-what-to-know/" target="_blank" rel="noopener">Grayscale Files For HYPE ETF – Here’s What To Know</a><div class="news-meta"><span class="news-source">newsBTC</span><span>1d ago</span></div></div><div class="news-item"><a href="https://economictimes.indiatimes.com/markets/cryptocurrency/bitcoin-ranges-between-69k-70k-amid-defensive-positioning-large-holders-keep-buying/articleshow/129713599.cms" target="_blank" rel="noopener">Bitcoin ranges between $69K-$70K amid defensive positioning, large holders keep buying</a><div class="news-meta"><span class="news-source">The Times of India</span><span>1d ago</span></div></div><div class="news-item"><a href="http://www.newsbtc.com/news/bitcoin/if-bitcoin-history-is-anything-to-go-by-the-crash-is-far-from-over-analyst/" target="_blank" rel="noopener">If Bitcoin History Is Anything To Go By, The Crash Is Far From Over: Analyst</a><div class="news-meta"><span class="news-source">newsBTC</span><span>1d ago</span></div></div></div>
       </div>
     </div>
   </section>
