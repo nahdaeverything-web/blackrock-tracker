@@ -494,7 +494,8 @@
     <div class="section-label">Market Overview</div>
     <div class="market-grid" id="marketGrid">
 <style>
-.tv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.tv-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+@media (max-width: 1024px) { .tv-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 768px) { .tv-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px) { .tv-grid { grid-template-columns: 1fr; } }
 </style>
@@ -534,6 +535,30 @@
     <div class="tradingview-widget-container__widget"></div>
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
     {"symbol":"SP:SPX","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- EUR/USD -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"FX:EURUSD","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- GBP/USD -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"FX:GBPUSD","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- USD/JPY -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"FX:USDJPY","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
+  </div>
+  <!-- DXY -->
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+    {"symbol":"TVC:DXY","width":"100%","colorTheme":"dark","isTransparent":true,"locale":"en"}</script>
   </div>
 </div></div>
   </section>
